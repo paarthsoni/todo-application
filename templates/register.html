@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{%block title%}
+Register
+{% endblock title%}
+
+{% block body%}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }} alert-dismissible fade show my-0" role="alert">
+ <strong> {{ message }}</strong>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+{% endif %}
+<body style="background-color:#F8F8FF;">
+<form method="post" action="/register">
+{% csrf_token %}
+<div class="container my-4">
+<center>
+<img src="https://s3.amazonaws.com/ionic-marketplace/todo-app-theme/icon.png" width="75px" >
+<div class="mb-3 form-group col-lg-5" style=" margin-top:2%;">
+<div class="row g-3">
+  <div class="col">
+     <b><center><label for="exampleInputEmail1" class="form-label">* First Name:</label><center></b>
+    <input type="text" class="form-control" name="fname"placeholder="First name" aria-label="First name" required>
+  </div>
+  <div class="col">
+   <b><center><label for="exampleInputEmail1" class="form-label">*Last Name:</label><center></b>
+    <input type="text" class="form-control" name="lname" placeholder="Last name" aria-label="Last name" required>
+  </div>
+</div>
+  <div class="mb-3 form-group col-lg-12" style=" margin-top:3.5%;">
+    <b><center><label for="exampleInputEmail1" class="form-label">* Username:</label><center></b>
+    <input type="text" class="form-control" id="exampleInputEmail1" name="username"aria-describedby="emailHelp" placeholder="Username" required>
+  </div>
+   <div class="mb-3 form-group col-lg-12" style=" margin-top:3.5%;">
+    <b><center><label for="exampleInputEmail1" class="form-label">* Email Address:</label><center></b>
+    <input type="email" class="form-control" id="exampleInputEmail1" name="emailid"aria-describedby="emailHelp" placeholder="Username" required>
+  </div>
+
+  <div class="mb-3 form-group col-lg-12" >
+  <b> <center> <label for="exampleInputPassword1" class="form-label">* Password:</label><center></b>
+    <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="Password" required>
+  </div>
+  <div> 
+  <div class="mb-3 form-group col-lg-12" >
+  <b> <center> <label for="exampleInputPassword1" class="form-label">* Confirm Password:</label><center></b>
+    <input type="password" class="form-control" id="exampleInputPassword1" name="cpassword" placeholder=" Confirm Password" required>
+  </div>
+  <div> 
+   <button class=" btn btn-dark" ><a href="/login" style="color:white; text-decoration:none;">Already have an account</button></a>
+  </div>
+  <center><div style="margin-left:0.5%; margin-top:2%;"> 
+  <button type="submit" class="btn btn-primary">Create Account</button>
+  </div>
+  </center>
+</form>
+</body>
+{% endblock body%}
