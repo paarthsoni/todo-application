@@ -14,7 +14,7 @@ class userdetails(models.Model):
 
 
 class tasks(models.Model):
-    task=models.CharField(max_length=1024,null=False)
+    task=models.CharField(max_length=222,null=False)
     username=models.CharField(max_length=122)
     date=models.DateTimeField()
     def __str__(self):

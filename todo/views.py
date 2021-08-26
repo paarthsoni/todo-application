@@ -73,12 +73,7 @@ def deletedata(request,id):
     data=tasks.objects.filter(username=username)
     return render(request,"view.html",{'data': data})
 
-def completedtask(request,id):
-    complete=tasks.objects.filter(id=id)
-    data='<style="color: green">{complete}</style>'
-    username=get_user(request)
-    data=tasks.objects.filter(username=username)
-    return render(request,"completedtask.html",{'data':data})
+
     
 
 def view(request):
