@@ -34,7 +34,7 @@ def registerUser(request):
         email=request.POST.get("emailid")
         password=request.POST.get("password")
         cpassword=request.POST.get("cpassword")
-        if cpassword==password and username is None:
+        if cpassword==password:
             user = User.objects.create_user(username=username,email=email,password=password)
             userdata=userdetails(fname=fname,lname=lname,username=username,email=email,date=datetime.today())
             user.save()
@@ -45,9 +45,7 @@ def registerUser(request):
         elif cpassword!=password:
             messages.warning(request, 'Entered passwords do not match!!')
             return redirect("/register")
-        elif username is not None:
-            messages.warning(request, 'Username already exists!! Please enter a different username')
-            return redirect("/register")
+       
 
 
     return render(request,"register.html")
