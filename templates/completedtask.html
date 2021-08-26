@@ -10,8 +10,8 @@ View tasks
   <table class="table table-striped">
   <thead>
     <tr>
-      
-      <th scope="col">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tasks</th>
+      <th scope="col">Sr.no</th>
+      <th scope="col">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tasks</th>
       <th scope="col">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Added on</th>
       <th scope="col"></th>
       <th scope="col"></th>
@@ -19,16 +19,17 @@ View tasks
   </thead>
   <tbody>
       {% for item in data %}
+      <tr id="btn_completed">
       
+        <td id="srno">
         
         </td>
-        <td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{item.task}}
+        <td >{{item.task|safe}}
         </td>
         <td>{{item.date}}</td>
         
+        <td><a class="btn btn-success" href="{% url 'completedtask' id=item.id %}" style="padding-left:5%; padding-right:5%;">Completed</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
         
-        <td><button type="submit" onlick="document.getElementbyId("hello1").style.color='green'" class="btn btn-success">Completed</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-          
          <a class="btn btn-danger" href="{% url 'deletedata' id=item.id %}" style="padding-left:5%; padding-right:5%;">Delete</a>
          </td>
          <td>

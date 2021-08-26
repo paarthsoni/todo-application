@@ -1,7 +1,7 @@
 from django.http.response import HttpResponse
-from todo.models import userdetails
+from todo.models import tasks, userdetails
 from django.shortcuts import render,redirect
-from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth import authenticate, get_user,login,logout
 from django.contrib import messages
 from django.contrib.auth.models import User
 from datetime import datetime
@@ -18,10 +18,12 @@ def loginUser(request):
         if user is not None:
             login(request,user)
             messages.success(request, 'Your are logged in successfully')
-            return redirect("/")
+            return redirect("/",username)
+            
         else:
             messages.warning(request, 'Invalid username or password')
             return redirect("/login")
+    
     return render(request,"login.html")
 
 def registerUser(request):
@@ -32,7 +34,7 @@ def registerUser(request):
         email=request.POST.get("emailid")
         password=request.POST.get("password")
         cpassword=request.POST.get("cpassword")
-        if cpassword==password:
+        if cpassword==password and username is None:
             user = User.objects.create_user(username=username,email=email,password=password)
             userdata=userdetails(fname=fname,lname=lname,username=username,email=email,date=datetime.today())
             user.save()
@@ -40,8 +42,11 @@ def registerUser(request):
             login(request,user)
             messages.success(request, 'Your account is created successfully ')
             return redirect("/")
-        else:
+        elif cpassword!=password:
             messages.warning(request, 'Entered passwords do not match!!')
+            return redirect("/register")
+        elif username is not None:
+            messages.warning(request, 'Username already exists!! Please enter a different username')
             return redirect("/register")
 
 
@@ -53,12 +58,33 @@ def logoutUser(request):
    return redirect("/")
 
 def add(request):
-    
-        
+    if request.method=="POST":
+        username=get_user(request)
+        taskdetail=request.POST.get("taskdetail")
+        userdata=tasks(task=taskdetail,username=username,date=datetime.now())
+        userdata.save()
+        messages.success(request, 'Task added successfully!!')
+        return redirect("/add")
     return render(request,"add.html")
 
+def deletedata(request,id):
+    tasks.objects.filter(id=id).delete()
+    username=get_user(request)
+    data=tasks.objects.filter(username=username)
+    return render(request,"view.html",{'data': data})
 
+def completedtask(request,id):
+    complete=tasks.objects.filter(id=id)
+    data='<style="color: green">{complete}</style>'
+    username=get_user(request)
+    data=tasks.objects.filter(username=username)
+    return render(request,"completedtask.html",{'data':data})
+    
 
 def view(request):
+        username=get_user(request)
+        data=tasks.objects.filter(username=username)
+        return render(request,"view.html",{'data': data})
     
-    return render(request,"view.html")
+    
+
